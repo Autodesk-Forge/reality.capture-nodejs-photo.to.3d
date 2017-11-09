@@ -1,0 +1,30 @@
+{
+  "name": "photo.to.3d-sample",
+  "version": "1.0.0",
+  "description": "A Node.js sample for the Forge Reality Capture (photo to 3D) API",
+  "main": "phototo3d.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ReCap",
+    "Node.js",
+    "REST",
+    "3D",
+    "Mesh",
+    "Photo",
+    "UAV"
+  ],
+  "author": "Autodesk (www.autodesk.com)",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "^1.15.1",
+    "client-oauth2": "^2.2.0",
+    "commander": "^2.9.0",
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "serve-favicon": "^2.3.0",
+    "unirest": "^0.5.0"
+  }
+}
