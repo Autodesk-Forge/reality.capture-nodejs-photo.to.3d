@@ -76,7 +76,7 @@ app.get ('/app', function (req, res) {
                 if ( response.statusCode != 200 )
                     throw response;
 
-                var json = JSON.parse (response.body.toString().trim());
+                var json = response.body;
 		var obj = {
                     'dt': json.date
                 };
@@ -106,7 +106,7 @@ app.post ('/app/createscene', function (req, res) {
 			 if ( response.statusCode != 200 )
 			     throw response;
 
-			 var json = JSON.parse (response.body.toString().trim());
+			 var json = response.body;
 			 var obj = {
 			     'id': json.Photoscene.photosceneid
 			 };
@@ -154,7 +154,7 @@ app.post ('/app/post', function (req, res) {
 		if ( response.statusCode != 200 )
 		    throw response;
 
-		var json = JSON.parse (response.body.toString().trim());
+		var json = response.body;
 		var obj = {
 		    'count': json.Files.file.length
 		};
@@ -205,7 +205,7 @@ app.post ('/app/results', function (req, res) {
 		if ( response.statusCode != 200 )
 		    throw response;
 
-		var json = JSON.parse (response.body.toString().trim());
+		var json = response.body;
 		res.json (json);
 	    } catch ( err ) {
 		console.log (response.code + ' - ' + response.body);
