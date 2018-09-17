@@ -34,4 +34,4 @@ This sample illustrates the Reality Capture API's photogrammetry workflow:
    - Enter a scene name in the `Name` field and work the buttons from the top down while observing the messages on the console.
 
 ### Thumbnail
-![thumbnail](screenshot.png)
+![thumbnail](/thumbnail.png)
