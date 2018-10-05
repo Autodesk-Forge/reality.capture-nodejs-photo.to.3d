@@ -28,10 +28,10 @@ app.use(express.static (__dirname + '/www'));
 app.use(favicon (__dirname + '/www/images/favicon.ico'));
 app.set('view engine', 'ejs');
 
-var client_id		= '<REPLACE_WITH_FORGE_CLIENT_ID>';
-var client_secret	= '<REPLACE_WITH_FORGE_CLIENT_SECRET>';
+var client_id		= process.env.FORGE_CLIENT_ID;
+var client_secret	= process.env.FORGE_CLIENT_SECRET;
 var access_token	= '';
-var redirect_uri	= 'http://localhost.autodesk.com/callback';
+var redirect_uri	= 'http://localhost:3000/callback';
 
 var scope			= ['data:read', 'data:write'];
 var BASE_ENDPOINT	= 'https://developer.api.autodesk.com/photo-to-3d/v1';
@@ -214,7 +214,7 @@ app.post ('/app/results', function (req, res) {
 	});
 });
 
-app.set ('port', process.env.PORT || 80);
+app.set ('port', 3000);
 var server = app.listen (app.get ('port'), function () {
     console.log ('Server listening on port ' + server.address ().port);
 });

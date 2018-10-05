@@ -2,135 +2,211 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Autodesk Forge Photo to 3D Node.js sample</title>
+    <meta charset="UTF-8">
+    <title>Autodesk Forge Photo to 3D Node.js sample</title>
 
-	<meta http-equiv="cache-control" content="max-age=0" />
-	<meta http-equiv="cache-control" content="no-cache" />
-	<meta http-equiv="expires" content="0" />
-	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-	<meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=0"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
 
-	<!-- External libraries -->
-	<script src="https://code.jquery.com/jquery-2.1.2.js"></script><!-- jquery-2.1.2.min.js -->
-	<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script> <!-- http://jqueryui.com/ -->
+    <!-- Common packages: jQuery, Bootstrap, jsTree -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
 
-	<!-- Autodesk View & Data API -->
-	<link rel="stylesheet" href="https://autodeskviewer.com/viewers/2.5/style.min.css" />
-	<!-- script src="https://autodeskviewer.com/viewers/2.5/three.min.js"></script -->
-	<script src="https://autodeskviewer.com/viewers/2.5/viewer3D.min.js"></script>
+    <!-- Our scripts/css -->
+    <link rel="stylesheet" href="./css/view.css">
 
-	<!-- Our scripts/css -->
-	<link rel="stylesheet" href="./view.css">
+    <script>
+        $(document).ready(function () {
+            var buttons = $('button[id^=q-]');
+            $.each(buttons, function (index, button) {
+                $(button).on('click', function (evt) {
+                    evt.stopPropagation();
+                    var cmd = evt.target.id.substring(2);
+                    $.ajax({
+                        url: '/app/' + cmd,
+                        type: 'get',
+                        //data: null,
+                        contentType: 'application/json',
+                        complete: null
+                    }).done(function (results) {
+                        $.each(results, function (index, item) {
+                            $('#' + cmd + '-' + index).text(item);
+                        });
+                    });
+                });
+            });
 
-	<script>
-		$(document).ready (function () {
-			var buttons =$('button[id^=q-]') ;
-			$.each (buttons, function (index, button) {
-				$(button).on ('click', function (evt) {
-					evt.stopPropagation () ;
-					var cmd =evt.target.id.substring (2) ;
-					$.ajax ({
-						url: '/app/' + cmd,
-						type: 'get',
-						//data: null,
-						contentType: 'application/json',
-						complete: null
-					}).done (function (results) {
-						$.each (results, function (index, item) {
-							$('#' + cmd + '-' + index).text (item) ;
-						}) ;
-					}) ;
-				}) ;
-			}) ;
+            $('#p-createscene').on('click', function (evt) {
+                evt.stopPropagation();
+                var cmd = evt.target.id.substring(2);
+                var obj = {name: $('#scenename').val()};
+                $.ajax({
+                    url: '/app/' + cmd,
+                    type: 'post',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    complete: null
+                }).done(function (results) {
+                    $.each(results, function (index, item) {
+                        $('#' + cmd + '-' + index).text(item);
+                    });
+                });
+            });
 
-			$('#p-createscene').on ('click', function (evt) {
-				evt.stopPropagation () ;
-				var cmd =evt.target.id.substring (2) ;
-				var obj ={ name: $('#scenename').val () } ;
-				$.ajax ({
-					url: '/app/' + cmd,
-					type: 'post',
-					data: JSON.stringify (obj),
-					contentType: 'application/json',
-					dataType: 'json',
-					complete: null
-				}).done (function (results) {
-					$.each (results, function (index, item) {
-						$('#' + cmd + '-' + index).text (item) ;
-					}) ;
-				}) ;
-			}) ;
+            $('#p-post').on('click', function (evt) {
+                evt.stopPropagation();
+                var cmd = evt.target.id.substring(2);
+                var obj = {id: $('#createscene-id').text()};
+                $.ajax({
+                    url: '/app/' + cmd,
+                    type: 'post',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    complete: null
+                }).done(function (results) {
+                    $.each(results, function (index, item) {
+                        $('#' + cmd + '-' + index).text(item);
+                    });
+                });
+            });
 
-			$('#p-post').on ('click', function (evt) {
-				evt.stopPropagation () ;
-				var cmd =evt.target.id.substring (2) ;
-				var obj ={ id: $('#createscene-id').text () } ;
-				$.ajax ({
-					url: '/app/' + cmd,
-					type: 'post',
-					data: JSON.stringify (obj),
-					contentType: 'application/json',
-					dataType: 'json',
-					complete: null
-				}).done (function (results) {
-					$.each (results, function (index, item) {
-						$('#' + cmd + '-' + index).text (item) ;
-					}) ;
-				}) ;
-			}) ;
+            $('#p-launch').on('click', function (evt) {
+                evt.stopPropagation();
+                var cmd = evt.target.id.substring(2);
+                var obj = {id: $('#createscene-id').text()};
+                $.ajax({
+                    url: '/app/' + cmd,
+                    type: 'post',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    complete: null
+                }).done(function (results) {
+                    $.each(results, function (index, item) {
+                        $('#' + cmd + '-' + index).text(item);
+                    });
+                });
+            });
 
-			$('#p-launch').on ('click', function (evt) {
-				evt.stopPropagation () ;
-				var cmd =evt.target.id.substring (2) ;
-				var obj ={ id: $('#createscene-id').text () } ;
-				$.ajax ({
-					url: '/app/' + cmd,
-					type: 'post',
-					data: JSON.stringify (obj),
-					contentType: 'application/json',
-					dataType: 'json',
-					complete: null
-				}).done (function (results) {
-					$.each (results, function (index, item) {
-						$('#' + cmd + '-' + index).text (item) ;
-					}) ;
-				}) ;
-			}) ;
-
-			$('#p-results').on ('click', function (evt) {
-				evt.stopPropagation () ;
-				var cmd =evt.target.id.substring (2) ;
-				var obj ={ id: $('#createscene-id').text () } ;
-				$.ajax ({
-					url: '/app/' + cmd,
-					type: 'post',
-					data: JSON.stringify (obj),
-					contentType: 'application/json',
-					dataType: 'json',
-					complete: null
-				}).done (function (results) {
-					$('#' + cmd + '-json').text (JSON.stringify (results)) ;
-				}) ;
-			}) ;
-		}) ;
-	</script>
+            $('#p-results').on('click', function (evt) {
+                evt.stopPropagation();
+                var cmd = evt.target.id.substring(2);
+                var obj = {id: $('#createscene-id').text()};
+                $.ajax({
+                    url: '/app/' + cmd,
+                    type: 'post',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    complete: null
+                }).done(function (results) {
+                    $('#' + cmd + '-json').text(JSON.stringify(results));
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
-	<div>Server date: <%= dt %></div>
 
-	<div>Name: <input id="scenename" /> <button id="p-createscene">Create</button></div>
-	<div>ID created: <span id="createscene-id"></span></div>
+<!-- Fixed navbar by Bootstrap: https://getbootstrap.com/examples/navbar-fixed-top/ -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav left">
+            <li>
+                <a href="http://developer.autodesk.com" target="_blank">
+                    <img alt="Autodesk Forge" src="//developer.static.autodesk.com/images/logo_forge-2-line.png"
+                         height="20">
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End of navbar -->
+<div class="container-fluid fill">
+    <div class="row fill">
+        <div class="fill">
+            <div class="panel panel-default content">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Server date: <%= dt %></h3>
+                </div>
 
-	<div>Photos <button id="p-post">Post</button></div>
-	<div>Nb posted: <span id="post-count"></span></div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Scene Name</span>
+                        <input id="scenename" type="text" class="form-control" placeholder="some_scene_name"/>
+                        <span class="input-group-btn">
+                                    <button id="p-createscene" class="btn btn-default">Create</button>
+                                </span>
+                    </div>
+                    <br/>
 
-	<div><button id="p-launch">Launch photoscene</button></div>
-	<div id="launch-ok"></div>
+                    <div class="input-group">
+                        <span class="input-group-addon">ID created</span>
+                        <span id="createscene-id" type="text" class="list-group-item list-group-item-info"></span>
+                    </div>
+                    <br/>
 
-	<div><button id="p-results">Get Results</button></div>
-	<div id="results-json"></div>
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">Sample images</div>
+
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="https://s3.amazonaws.com/adsk-recap-public/forge/lion/DSC_1158.JPG">DSC_1158.JPG</a></li>
+                            <li class="list-group-item"><a href="https://s3.amazonaws.com/adsk-recap-public/forge/lion/DSC_1159.JPG">DSC_1159.JPG</a></li>
+                            <li class="list-group-item"><a href="https://s3.amazonaws.com/adsk-recap-public/forge/lion/DSC_1160.JPG">DSC_1160.JPG</a></li>
+                            <li class="list-group-item"><a href="https://s3.amazonaws.com/adsk-recap-public/forge/lion/DSC_1162.JPG">DSC_1162.JPG</a></li>
+                            <li class="list-group-item"><a href="https://s3.amazonaws.com/adsk-recap-public/forge/lion/DSC_1163.JPG">DSC_1163.JPG</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <button id="p-post" type="button">Upload remotely located photos</button>
+                    </div>
+                    <br/>
+
+                    <div>
+                            <span class="label label-default">
+                                Number of posted images: <span id="post-count"></span>
+                            </span>
+                    </div>
+                    <br/>
+
+                    <div>
+                        <button id="p-launch" type="button">Launch photoscene</button>
+                    </div>
+                    <br/>
+
+                    <div>
+                        <span id="launch-ok" class="label label-success"></span>
+                    </div>
+                    <br/>
+
+                    <div>
+                        <button id="p-results" type="button">Get Results</button>
+                    </div>
+                    <br/>
+
+                    <div class="alert alert-info">
+                        <p id="results-json"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
