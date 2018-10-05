@@ -17,7 +17,7 @@ This sample illustrates the [Forge Reality Capture API](https://developer.autode
 - Obtain a download link for the model
 
 ### Thumbnail
-![thumbnail](screen.png)
+![thumbnail](./screenshot.png)
 
 # Setup
 ## Prerequisites
