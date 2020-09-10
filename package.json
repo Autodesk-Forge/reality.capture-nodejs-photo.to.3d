@@ -25,6 +25,6 @@
     "ejs": "^2.4.2",
     "express": "^4.13.4",
     "serve-favicon": "^2.3.0",
-    "unirest": "^0.5.1"
+    "unirest": "^0.6.0"
   }
 }
