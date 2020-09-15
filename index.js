@@ -54,7 +54,7 @@ app.get('/auth', function (req, res) {
     res.redirect(uri);
 });
 
-app.get('/callback', function (req, res) {
+app.get('/api/forge/callback/oauth', function (req, res) {
     recapAuth.code.getToken (req.url)
     	.then (function (token) {
 	    console.log ('token: ');

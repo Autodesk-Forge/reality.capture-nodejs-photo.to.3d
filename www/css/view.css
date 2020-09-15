@@ -13,9 +13,6 @@
     /*max-width: 500px;*/
     min-width: 500px;
     text-align: center;
-
-    position: absolute;
-    left: 30%;
     top: 15%;
 }
 
@@ -61,3 +58,5 @@
     background-color: rgb(6, 150, 215);
     color: #fff;
 }
+
+#results-json{overflow-x: scroll;}
