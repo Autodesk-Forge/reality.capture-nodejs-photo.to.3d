@@ -18,7 +18,7 @@
   "author": "Autodesk (www.autodesk.com)",
   "license": "MIT",
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.6.4",
     "body-parser": "^1.15.1",
     "client-oauth2": "^2.2.0",
     "commander": "^2.9.0",
