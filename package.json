@@ -23,7 +23,7 @@
     "client-oauth2": "^2.2.0",
     "commander": "^2.9.0",
     "ejs": "^2.4.2",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "serve-favicon": "^2.3.0",
     "unirest": "^0.6.0"
   }
